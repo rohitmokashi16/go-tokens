@@ -1,0 +1,45 @@
+
+syntax = "proto3";
+
+option go_package = "token_sync/token_sync";
+
+package token_sync;
+
+// Interface exported by the server.
+service TokenSync {
+    rpc Replicate(TokenBroadcast) returns (Response) {}
+    rpc GetTimeStamp(TokenId) returns (TimeStamp) {}
+    rpc GetTokenDetails(TokenId) returns (TokenBroadcast) {}
+}
+
+message TokenId {
+    string id = 1;
+}
+
+message TimeStamp {
+    uint64 ts = 1;
+}
+
+message TokenBroadcast {
+    string id = 1;
+    string name = 2;
+    uint64 ts = 3;
+    Domain domain = 4;
+    State state = 5;
+}
+
+message Domain {
+    uint64 low = 1;
+    uint64 mid = 2;
+    uint64 high = 3;
+}
+
+message State {
+    uint64 partial = 1;
+    uint64 final = 2;
+}
+
+message Response {
+    string msg = 1;
+}
+
